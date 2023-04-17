@@ -26,7 +26,5 @@ CREATE TABLE employees (
     FOREIGN KEY (employee_salary)
     REFERENCES roles(salary)
     ON DELETE SET NULL,
-    FOREIGN KEY (manager_id)
-    REFERENCES employees(id)
-    ON DELETE SET NULL
-)
+    manager_id INT REFERENCES employees(id)
+);
