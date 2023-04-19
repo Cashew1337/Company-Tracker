@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
 const { viewDatabase } = require('./js/query');
+const sequelize = require('./config/connection')
 
 const questions = [
         {
             type: 'list',
             message: 'What would you like to do?',
-            name: 'prompt',
+            name: 'choice',
             choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
         },
         {
