@@ -7,6 +7,7 @@ viewDatabase = async () => {
     const sql = `SELECT * FROM departments`;
 
     await sequelize.query(sql, (err, result) => {
+        console.log(result);
         if (err) {
             console.error(err);
             return;
