@@ -1,11 +1,11 @@
 const mysql = require('mysql2/promise');
-
+require('dotenv').config();
 const inquirer = require('inquirer');
 
 
 updateEmployee = async () => {
 
-    const db = await mysql.createConnection({ host: process.env.HOST, user: process.env.USER, password: process.env.SECRET_KEY , database: process.env.DATABASE });
+    const db = await mysql.createConnection({ host: 'localhost', user: process.env.DB_USER, password: process.env.DB_PASSWORD , database: process.env.DB_NAME });
 
     const role_results = await db.query('SELECT id, title FROM role');
     
