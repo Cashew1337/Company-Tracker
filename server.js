@@ -1,6 +1,9 @@
 const inquirer = require('inquirer');
-const { viewDatabase } = require('./js/query');
-const sequelize = require('./config/connection')
+const sequelize = require('./config/connection');
+
+const { allDepartments, allRoles, allEmployees } = require('./queries/queries.js');
+const { addDepartment, addNewRole, addNewEmployee } = require('./queries/insertqueries.js');
+const { updateEmployee } = require('./queries/updatequeries.js');
 
 const questions = [
     {
@@ -9,62 +12,46 @@ const questions = [
         name: 'choice',
         choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
     },
-    {
-        type: 'input',
-        message: 'Enter new department name',
-        name: 'department_name',
-        when: (answer) => answer.choice === 'add a department'
-    },
-    {
-        type: 'input',
-        message: 'Enter new role name',
-        name: 'title',
-        when: (answer) => answer.choice === 'add a role'
-    },
-    {
-        type: 'input',
-        message: 'Enter role salary',
-        name: 'salary',
-        when: (answer) => answer.choice === 'add a role'
-    },
-    {
-        type: 'input',
-        message: 'Enter department id for new role',
-        name: 'department_id',
-        when: (answer) => answer.choice === 'add a role'
-    },
-    {
-        type: 'input',
-        message: 'Enter first name',
-        name: 'first_name',
-        when: (answer) => answer.choice === 'add an employee'
-    },
-    {
-        type: 'input',
-        message: 'Enter last name',
-        name: 'last_name',
-        when: (answer) => answer.choice === 'add an employee'
-    },
-    {
-        type: 'input',
-        message: 'Enter employee role',
-        name: 'title',
-        when: (answer) => answer.choice === 'add an employee'
-    },
-    {
-        type: 'input',
-        message: 'Enter employee manager',
-        name: 'manager',
-        when: (answer) => answer.choice === 'add an employee'
-    }
 ];
+
 
 const init = async () => {
     const data = await inquirer.prompt(questions)
 
-    if (data.choice === 'view all departments') {
-        viewDatabase();
+    switch (data.choice) {
+        case 'View all Departments':
+            allDepartments();
+            break;
+
+        case 'View all roles':
+            allRoles();
+            break;
+
+        case 'View all employees':
+            allEmployees();
+            break;
+
+        case 'Add Department':
+            addDepartment();
+            break;
+
+        case 'Add role':
+            addNewRole();
+            break;
+
+        case 'Add employee':
+            addNewEmployee();
+            break;
+
+        case 'Update employee':
+            updateEmployee();
+            break;
+
+        case 'Quit':
+            process.exit();
+
     }
+
 }
 
 sequelize.authenticate().then(() => {
